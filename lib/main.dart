@@ -1,0 +1,35 @@
+import 'package:cosmetics_app/views/auth/on_boarding.dart';
+import 'package:cosmetics_app/views/auth/splash.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'core/helper_methods.dart';
+
+void main() async{
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    navigatorKey: navKey,
+    home:OnBoardingView(),
+    theme: ThemeData(
+        scaffoldBackgroundColor: Color(0xffD9D9D9),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),
+        appBarTheme: AppBarThemeData(
+            centerTitle: true, systemOverlayStyle: SystemUiOverlayStyle.dark
+
+        ),
+        inputDecorationTheme: InputDecorationThemeData(
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8)
+            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+            style:FilledButton.styleFrom(
+              backgroundColor: Color(0x665A6690)
+            ),
+        )
+    ),
+  ));
+}
+
