@@ -1,3 +1,4 @@
+import 'package:cosmetics_app/views/auth/log_in.dart';
 import 'package:cosmetics_app/views/auth/on_boarding.dart';
 import 'package:cosmetics_app/views/auth/splash.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +6,14 @@ import 'package:flutter/services.dart';
 
 import 'core/helper_methods.dart';
 
-void main() async{
+void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     navigatorKey: navKey,
-    home:OnBoardingView(),
+    home: LogInView(),
     theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffD9D9D9),
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),
         appBarTheme: AppBarThemeData(
             centerTitle: true, systemOverlayStyle: SystemUiOverlayStyle.dark
 
@@ -20,14 +21,22 @@ void main() async{
         inputDecorationTheme: InputDecorationThemeData(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8)
+                borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Color(0x665A6690)),
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))
+            disabledBorder:OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Color(0x665A6690)),
+
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0x665A6690)),
+                borderRadius: BorderRadius.circular(8)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Color(0x665A6690)))
         ),
         filledButtonTheme: FilledButtonThemeData(
-            style:FilledButton.styleFrom(
+          style: FilledButton.styleFrom(
               backgroundColor: Color(0x665A6690)
-            ),
+          ),
         )
     ),
   ));
