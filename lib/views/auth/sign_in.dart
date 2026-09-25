@@ -152,15 +152,15 @@ class _SignInViewState extends State<SignInView> {
                         fontWeight: FontWeight.w400,
                         color: Color(0xff8E8EA9),
                       ),
-                      suffixIcon: IconButton(onPressed: () {
-                        setState(() {
-                          isOccurred= !isOccurred;
+                      suffixIcon: IconButton(
+                        onPressed: () {
                           setState(() {
-
+                            isOccurred = !isOccurred;
+                            setState(() {});
                           });
-                        });
-                      },icon: SvgPicture.asset(
-                          "assets/icons/visibility_${isOccurred? "off":"on"}.svg",
+                        },
+                        icon: SvgPicture.asset(
+                          "assets/icons/visibility_${isOccurred ? "off" : "on"}.svg",
                           fit: BoxFit.scaleDown,
                         ),
                       ),
@@ -177,14 +177,13 @@ class _SignInViewState extends State<SignInView> {
                         fontWeight: FontWeight.w400,
                         color: Color(0xff8E8EA9),
                       ),
-                      suffixIcon: IconButton(onPressed: () {
-                        isOccurredInConfirm= !isOccurredInConfirm;
-                        setState(() {
-
-                        });
-                      },
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          isOccurredInConfirm = !isOccurredInConfirm;
+                          setState(() {});
+                        },
                         icon: SvgPicture.asset(
-                          "assets/icons/visibility_${isOccurredInConfirm? "off":"on"}.svg",
+                          "assets/icons/visibility_${isOccurredInConfirm ? "off" : "on"}.svg",
                           fit: BoxFit.scaleDown,
                         ),
                       ),
@@ -202,7 +201,8 @@ class _SignInViewState extends State<SignInView> {
                         : () {
                             goTo(page: VerifyView());
                           },
-                    style: TextButton.styleFrom(disabledBackgroundColor: Colors.grey,
+                    style: TextButton.styleFrom(
+                      disabledBackgroundColor: Colors.grey,
                       padding: EdgeInsets.symmetric(
                         vertical: 20,
                         horizontal: 117,
