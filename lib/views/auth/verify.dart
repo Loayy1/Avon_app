@@ -1,9 +1,16 @@
 import 'package:cosmetics_app/core/helper_methods.dart';
+import 'package:cosmetics_app/views/auth/sign_in.dart';
 import 'package:cosmetics_app/views/pages/home.dart';
 import 'package:flutter/material.dart';
 
+import 'create_password.dart';
+import 'forget_password.dart';
+
 class VerifyView extends StatefulWidget {
-  const VerifyView({super.key});
+
+   final bool fromSignIn;
+
+  const VerifyView({super.key, required this.fromSignIn});
 
   @override
   State<VerifyView> createState() => _VerifyViewState();
@@ -39,7 +46,26 @@ class _VerifyViewState extends State<VerifyView> {
             },
             child: Column(
               children: [
-                SizedBox(height: 40),
+                ?widget.fromSignIn ? null :
+              Align(
+                alignment: AlignmentDirectional.topStart,
+                child: IconButton(
+                  onPressed: () {
+                    goTo(page: ForgetPasswordView());
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 22,
+                    color: Color(0xff101010),
+                  ),
+                  style: IconButton.styleFrom(
+                    backgroundColor: Color(0x0D101010),
+                    fixedSize: Size(22, 22),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                ),
+              )
+                ,SizedBox(height: 40),
                 Image.asset("assets/images/logo.png", height: 62, width: 67),
                 SizedBox(height: 40),
                 Text(
@@ -52,7 +78,8 @@ class _VerifyViewState extends State<VerifyView> {
                 ),
                 SizedBox(height: 40),
                 Text(
-                  "We just sent a 4-digit verification code to \nyour email amramer522@gmail.com. Enter \nthe code in the box below to continue.",
+                  "We just sent a 4-digit verification code to \n+20 1022658997 Enter the code in the box \nbelow to continue.",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -167,6 +194,7 @@ class _VerifyViewState extends State<VerifyView> {
                           codeController[3].text.isEmpty
                       ? null
                       : () {
+                    if (widget.fromSignIn){
                           showDialog(
                             context: context,
                             builder: (context) {
@@ -202,7 +230,11 @@ class _VerifyViewState extends State<VerifyView> {
                                     TextButton(
                                       onPressed: () {
                                         setState(() {
-                                          goTo(page: HomeView());
+                                          if(widget.fromSignIn==true) {
+                                            goTo(page: HomeView());
+                                          }else{
+                                            goTo(page: CreatePasswordView());
+                                          }
                                         });
                                       },
                                       style: TextButton.styleFrom(
@@ -214,7 +246,9 @@ class _VerifyViewState extends State<VerifyView> {
                                         ),
                                       ),
                                       child: Text(
-                                        "Go to home",
+                                        widget.fromSignIn ?
+                                        "Go to home":
+                                        "create password",textAlign: TextAlign.center,
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -223,7 +257,10 @@ class _VerifyViewState extends State<VerifyView> {
                               );
                             },
                           );
-                        },
+                        }else{
+                      goTo(page: CreatePasswordView());
+                    }
+                      },
                   style: TextButton.styleFrom(
                     disabledBackgroundColor: Colors.grey,
                     backgroundColor: Color(0xffD75D72),

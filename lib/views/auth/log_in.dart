@@ -148,7 +148,7 @@ class _LogInViewState extends State<LogInView> {
                     alignment: AlignmentDirectional.centerEnd,
                     child: TextButton(
                       onPressed: () {
-                        goTo(page: ForgetPasswordView());
+                        goTo(page: ForgetPasswordView(),keepHistory: true);
                         setState(() {
 
                         });
@@ -199,7 +199,7 @@ class _LogInViewState extends State<LogInView> {
                       ),
                       TextButton(
                         onPressed: () {
-                          goTo(page: SignInView());
+                          goTo(page: SignInView(),keepHistory: true);
                           setState(() {});
                         },
                         style: TextButton.styleFrom(

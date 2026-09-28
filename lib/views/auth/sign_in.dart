@@ -199,7 +199,7 @@ class _SignInViewState extends State<SignInView> {
                             confirmPasswordController.text.isEmpty
                         ? null
                         : () {
-                            goTo(page: VerifyView());
+                            goTo(page: VerifyView(fromSignIn: true,));
                           },
                     style: TextButton.styleFrom(
                       disabledBackgroundColor: Colors.grey,

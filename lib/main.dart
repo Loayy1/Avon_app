@@ -1,3 +1,5 @@
+import 'package:cosmetics_app/views/auth/create_password.dart';
+import 'package:cosmetics_app/views/auth/forget_password.dart';
 import 'package:cosmetics_app/views/auth/log_in.dart';
 import 'package:cosmetics_app/views/auth/on_boarding.dart';
 import 'package:cosmetics_app/views/auth/sign_in.dart';
@@ -12,7 +14,7 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     navigatorKey: navKey,
-    home: VerifyView(),
+    home: CreatePasswordView(),
     theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffD9D9D9),
         // colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),
