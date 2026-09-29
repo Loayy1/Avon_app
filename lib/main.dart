@@ -5,7 +5,11 @@ import 'package:cosmetics_app/views/auth/on_boarding.dart';
 import 'package:cosmetics_app/views/auth/sign_in.dart';
 import 'package:cosmetics_app/views/auth/splash.dart';
 import 'package:cosmetics_app/views/auth/verify.dart';
+import 'package:cosmetics_app/views/pages/cart/cart.dart';
+import 'package:cosmetics_app/views/pages/cart/checkout.dart';
+import 'package:cosmetics_app/views/pages/categories.dart';
 import 'package:cosmetics_app/views/pages/home.dart';
+import 'package:cosmetics_app/views/pages/profile.dart';
 import 'package:cosmetics_app/views/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +20,7 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     navigatorKey: navKey,
-    home: HomeView(),
+    home: CheckoutView(),
     theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffD9D9D9),
         // colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),
