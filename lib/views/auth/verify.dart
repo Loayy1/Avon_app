@@ -3,6 +3,7 @@ import 'package:cosmetics_app/views/auth/sign_in.dart';
 import 'package:cosmetics_app/views/pages/home.dart';
 import 'package:flutter/material.dart';
 
+import '../view.dart';
 import 'create_password.dart';
 import 'forget_password.dart';
 
@@ -231,7 +232,7 @@ class _VerifyViewState extends State<VerifyView> {
                                       onPressed: () {
                                         setState(() {
                                           if(widget.fromSignIn==true) {
-                                            goTo(page: HomeView());
+                                            goTo(page: ViewPage());
                                           }else{
                                             goTo(page: CreatePasswordView());
                                           }

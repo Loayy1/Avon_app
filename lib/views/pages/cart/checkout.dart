@@ -2,6 +2,7 @@ import 'package:cosmetics_app/core/helper_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../view.dart';
 import 'cart.dart';
 
 class CheckoutView extends StatelessWidget {
@@ -16,7 +17,7 @@ class CheckoutView extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            goTo(page: CartView());
+            goTo(page: ViewPage());
           },
           icon: Transform.translate(
             offset: Offset(3, 0),

@@ -20,7 +20,7 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     navigatorKey: navKey,
-    home: CheckoutView(),
+    home: SplashView(),
     theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffD9D9D9),
         // colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),

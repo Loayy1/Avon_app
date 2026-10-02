@@ -11,9 +11,8 @@ class CreatePasswordView extends StatefulWidget {
 }
 
 class _CreatePasswordViewState extends State<CreatePasswordView> {
-
-  bool isObscure=true;
-  bool confirmIsObscure=true;
+  bool isObscure = true;
+  bool confirmIsObscure = true;
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
@@ -26,9 +25,7 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
             padding: const EdgeInsets.all(13),
             child: Form(
               onChanged: () {
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: Column(
                 children: [
@@ -36,7 +33,7 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
                   Image.asset("assets/images/logo.png", height: 62, width: 67),
                   SizedBox(height: 40),
                   Text(
-                    "Verify Code",
+                    "Create Password",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -66,12 +63,11 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          isObscure= !isObscure;
-                          setState(() {
-                          });
+                          isObscure = !isObscure;
+                          setState(() {});
                         },
                         icon: SvgPicture.asset(
-                          "assets/icons/visibility_${isObscure?"off":"on"}.svg",
+                          "assets/icons/visibility_${isObscure ? "off" : "on"}.svg",
                           fit: BoxFit.scaleDown,
                         ),
                       ),
@@ -90,13 +86,11 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          confirmIsObscure= !confirmIsObscure;
-                          setState(() {
-
-                          });
+                          confirmIsObscure = !confirmIsObscure;
+                          setState(() {});
                         },
                         icon: SvgPicture.asset(
-                          "assets/icons/visibility_${confirmIsObscure?"off":"on"}.svg",
+                          "assets/icons/visibility_${confirmIsObscure ? "off" : "on"}.svg",
                           fit: BoxFit.scaleDown,
                         ),
                       ),
@@ -104,65 +98,79 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
                   ),
                   SizedBox(height: 72),
                   TextButton(
-                    onPressed:passwordController.text.isEmpty || confirmPasswordController.text.isEmpty?null: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset("assets/images/done_verify.png"),
-                                SizedBox(height: 26),
-                                Text(
-                                  "Password Created!",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff434C6D),
+                    onPressed:
+                        passwordController.text.isEmpty ||
+                            confirmPasswordController.text.isEmpty ||
+                            passwordController.text !=
+                                confirmPasswordController.text
+                        ? null
+                        : () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25),
                                   ),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  "Congratulations! Your password \nhas been successfully created",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xff8E8EA9),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/done_verify.png",
+                                      ),
+                                      SizedBox(height: 26),
+                                      Text(
+                                        "Password Created!",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff434C6D),
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        "Congratulations! Your password \nhas been successfully created",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xff8E8EA9),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(height: 26),
+                                      TextButton(
+                                        onPressed: () {
+                                          goTo(page: LogInView());
+                                        },
+                                        style: TextButton.styleFrom(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 18,
+                                            horizontal: 54,
+                                          ),
+                                          backgroundColor: Color(0xffD75D72),
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        child: Text("Return to login"),
+                                      ),
+                                    ],
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 26),
-                                TextButton(
-                                  onPressed: () {
-                                    goTo(page: LogInView());
-                                  },
-                                  style: TextButton.styleFrom(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 18,
-                                      horizontal: 54,
-                                    ),
-                                    backgroundColor: Color(0xffD75D72),
-                                    foregroundColor: Colors.white,
-                                  ),
-                                  child: Text("Return to login"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
+                                );
+                              },
+                            );
+                          },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 21, horizontal: 88),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 21,
+                        horizontal: 88,
+                      ),
                       backgroundColor: Color(0xffD75D72),
                       foregroundColor: Colors.white,
-                      disabledBackgroundColor: Colors.grey
+                      disabledBackgroundColor: Colors.grey,
                     ),
-                    child: Text("Confirm",style: TextStyle(color: Colors.white),),
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),

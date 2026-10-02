@@ -13,19 +13,19 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   int currentPage = 0;
   final list = [
-    _collection(
+    _Collection(
       img: "assets/images/on_boarding1.png",
       title: "WELCOME!",
       supTitle:
           "Makeup has the power to transform your \nmood and empowers you to be a more \nconfident person.",
     ),
-    _collection(
+    _Collection(
       img: "assets/images/on_boarding2.png",
       title: "SEARCH & PICK",
       supTitle:
           "We have dedicated set of products \nand routines hand picked for every skin type.",
     ),
-    _collection(
+    _Collection(
       img: "assets/images/ring.png",
       title: "PUSH NOTIFICATIONS ",
       supTitle: "Allow notifications for new makeup & \ncosmetics offers.",
@@ -42,8 +42,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           children: [
             Align(
               alignment: AlignmentDirectional.topEnd,
-              child: TextButton(
-                onPressed: () {
+              child:  currentPage==list.length-1?null:TextButton(
+                onPressed:() {
                   goTo(page: LogInView());
                 },
                 child: Text(
@@ -87,9 +87,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             SizedBox(height: 50),
             currentPage == list.length - 1
                 ? SizedBox(
-              height: 65,
-                  width: 268,
-                  child: FilledButton(
+                    height: 65,
+                    width: 268,
+                    child: FilledButton(
                       onPressed: () {
                         goTo(page: LogInView());
                       },
@@ -108,8 +108,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                         ),
                       ),
                     ),
-                )
-                : IconButton(
+                  )
+                : FloatingActionButton(
                     onPressed: () {
                       if (currentPage == list.length - 1) {
                         goTo(page: LogInView());
@@ -119,14 +119,11 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                         });
                       }
                     },
-                    icon: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                    style: IconButton.styleFrom(
-                      backgroundColor: Color(0xff434C6D),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      fixedSize: Size(50, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                    backgroundColor: Color(0xff434C6D),
+                    child: Icon(Icons.arrow_forward_ios, color: Colors.white),
                   ),
           ],
         ),
@@ -135,8 +132,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 }
 
-class _collection {
+class _Collection {
   String img, title, supTitle;
 
-  _collection({required this.img, required this.title, required this.supTitle});
+  _Collection({required this.img, required this.title, required this.supTitle});
 }

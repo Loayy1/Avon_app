@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../pages/home.dart';
+import '../view.dart';
 import 'forget_password.dart';
 
 class LogInView extends StatefulWidget {
@@ -175,7 +176,7 @@ class _LogInViewState extends State<LogInView> {
                             passwordController.text.isEmpty
                         ? null
                         : () {
-                            goTo(page: HomeView());
+                            goTo(page: ViewPage());
                           },
                     style: FilledButton.styleFrom(
                       backgroundColor: Color(0xffD75D72),
