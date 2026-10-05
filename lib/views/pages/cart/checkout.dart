@@ -1,4 +1,4 @@
-import 'package:cosmetics_app/core/helper_methods.dart';
+import 'package:cosmetics_app/core/logic/helper_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

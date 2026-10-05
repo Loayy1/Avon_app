@@ -14,7 +14,7 @@ import 'package:cosmetics_app/views/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'core/helper_methods.dart';
+import 'core/logic/helper_methods.dart';
 
 void main() async {
   runApp(MaterialApp(

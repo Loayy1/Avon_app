@@ -1,4 +1,4 @@
-import 'package:cosmetics_app/core/helper_methods.dart';
+import 'package:cosmetics_app/core/logic/helper_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -90,7 +90,7 @@ class _CartViewState extends State<CartView> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) =>_Items(model: list[index]) ,
-                separatorBuilder:  (context, index) => SizedBox(height: 30,),
+                separatorBuilder:  (context, index) => Divider(color: Color(0x80B3B3C1)),
                 itemCount: list.length,
               ),SizedBox(height: 25,),
               Container(
@@ -366,7 +366,7 @@ class _ItemsState extends State<_Items> {
           ],
         ),
         SizedBox(height: 14),
-        Divider(color: Color(0x80B3B3C1)),
+
       ],
     );
   }

@@ -1,10 +1,13 @@
-import 'package:cosmetics_app/core/helper_methods.dart';
+import 'package:cosmetics_app/core/logic/dio_helper.dart';
+import 'package:cosmetics_app/core/logic/helper_methods.dart';
 import 'package:cosmetics_app/views/auth/log_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CreatePasswordView extends StatefulWidget {
-  const CreatePasswordView({super.key});
+  final phone;
+  final phonecode;
+  const CreatePasswordView({super.key, this.phone,this.phonecode});
 
   @override
   State<CreatePasswordView> createState() => _CreatePasswordViewState();
@@ -15,6 +18,16 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
   bool confirmIsObscure = true;
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  
+  void resetPassword()async{
+    final resp=await DioHelper.sendData("/api/Auth/reset-password",data: {
+      "countryCode": "+20",
+      "phoneNumber": widget.phone,
+      "newPassword": passwordController.text,
+      "confirmPassword": confirmPasswordController.text
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ViewPage extends StatefulWidget {
+
   const ViewPage({super.key});
 
   @override
@@ -13,19 +14,27 @@ class ViewPage extends StatefulWidget {
 }
 
 class _ViewPageState extends State<ViewPage> {
-  final page = [HomeView(), CategoriesView(), CartView(), ProfileView()];
+   int currentPage=0;
+  final controller = PageController(initialPage: 0);
+  final pages = [HomeView(), CategoriesView(), CartView(), ProfileView()];
   final icons = [
     "assets/icons/home.svg",
     "assets/icons/categories.svg",
     "assets/icons/my_cart.svg",
     "assets/icons/profile.svg",
   ];
-  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: page[currentPage],
+      body: PageView(
+        controller: controller,
+        onPageChanged: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        },children: pages,
+      ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(13),
         child: Container(
@@ -45,11 +54,11 @@ class _ViewPageState extends State<ViewPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(
-              page.length,
+              pages.length,
               (index) => IconButton(
                 onPressed: () {
                   setState(() {
-                    currentPage=index;
+                    controller.jumpToPage(index);
                   });
                 },
                 icon: SvgPicture.asset(

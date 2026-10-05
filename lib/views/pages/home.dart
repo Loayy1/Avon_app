@@ -1,3 +1,4 @@
+import 'package:cosmetics_app/core/logic/dio_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -9,23 +10,43 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final list1 = [
-    _Model(title: "Face tint / lip tint", img: "assets/images/top_item1.jpg"),
-    _Model(title: "Athe Red lipstick", img: "assets/images/top_item2.jpg"),
-    _Model(title: "Mascara for lashes", img: "assets/images/top_item3.jpg"),
-    _Model(title: "Blemish cover", img: "assets/images/top_item4.jpg"),
-  ];
-  final list2 = [
-    _Model(title: "IDYLL Perfume", img: "assets/images/most_order_img1.jpg"),
-    _Model(title: "Hand Cream", img: "assets/images/most_order_img2.jpg"),
-    _Model(title: "Pink Lipstick", img: "assets/images/most_order_img3.jpg"),
-    _Model(title: "Cleansing Foam", img: "assets/images/most_order_img4.jpg"),
-  ];
+  ProductData? details;
+  // final list1 = [
+  //   _Model(title: "Face tint / lip tint", img: "assets/images/top_item1.jpg"),
+  //   _Model(title: "Athe Red lipstick", img: "assets/images/top_item2.jpg"),
+  //   _Model(title: "Mascara for lashes", img: "assets/images/top_item3.jpg"),
+  //   _Model(title: "Blemish cover", img: "assets/images/top_item4.jpg"),
+  // ];
+  // final list2 = [
+  //   _Model(title: "IDYLL Perfume", img: "assets/images/most_order_img1.jpg"),
+  //   _Model(title: "Hand Cream", img: "assets/images/most_order_img2.jpg"),
+  //   _Model(title: "Pink Lipstick", img: "assets/images/most_order_img3.jpg"),
+  //   _Model(title: "Cleansing Foam", img: "assets/images/most_order_img4.jpg"),
+  // ];
+  
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  
+  void getData()async{
+    final resp=await DioHelper.getData("/api/Products");
+    if(resp.isSuccess){
+      setState(() {
+        details=ProductData.fromJson({"data":resp.data});
+      });
+    }
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: details==null?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(13),
@@ -81,8 +102,8 @@ class _HomeViewState extends State<HomeView> {
                     mainAxisSpacing: 15,
                     childAspectRatio: .7,
                   ),
-                  itemBuilder: (context, index) => _Items(model: list1[index]),
-                  itemCount: list1.length,
+                  itemBuilder: (context, index) => _Items(model: details!.list[index]),
+                  itemCount: details!.list.length>4?4:details!.list.length,
                 ),
                 SizedBox(height: 42),
                 Align(
@@ -106,8 +127,12 @@ class _HomeViewState extends State<HomeView> {
                     mainAxisSpacing: 15,
                     childAspectRatio: .7,
                   ),
-                  itemBuilder: (context, index) => _Items(model: list2[index]),
-                  itemCount: list2.length,
+                  itemBuilder: (context, index) => _Items(model: details!.list[index+4]),
+                  itemCount: details!.list.length > 4
+                      ? (details!.list.length - 4 > 4
+                      ? 4
+                      : details!.list.length - 4)
+                      : 0,
                 ),
                 SizedBox(height: 77),
               ],
@@ -119,14 +144,9 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-class _Model {
-  String title, img;
-
-  _Model({required this.title, required this.img});
-}
 
 class _Items extends StatelessWidget {
-  final _Model model;
+  final ProductModel model;
 
   const _Items({super.key, required this.model});
 
@@ -153,8 +173,8 @@ class _Items extends StatelessWidget {
                   top: Radius.circular(4),
                   bottom: Radius.circular(4),
                 ),
-                child: Image.asset(
-                  model.img,
+                child: Image.network(
+                  model.imageUrl,
                   height: 169,
                   width: 161,
                   fit: BoxFit.cover,
@@ -180,7 +200,7 @@ class _Items extends StatelessWidget {
           ),
           SizedBox(height: 3),
           Text(
-            model.title,
+            model.nameEn,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
@@ -189,7 +209,7 @@ class _Items extends StatelessWidget {
           ),
           SizedBox(height: 3),
           Text(
-            "\$44.99",
+            "${model.price.toString()} EGP",
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -200,4 +220,39 @@ class _Items extends StatelessWidget {
       ),
     );
   }
+}
+
+
+class ProductData {
+  late final List<ProductModel> list;
+
+  ProductData.fromJson(Map<String, dynamic> json){
+    list = List.from(json['data']??[]).map((e)=>ProductModel.fromJson(e)).toList();
+  }
+
+}
+
+class ProductModel {
+  late final int id;
+  late final String nameEn;
+  late final String nameAr;
+  late final String descriptionEn;
+  late final String descriptionAr;
+  late final double? price;
+  late final int stock;
+  late final String imageUrl;
+  late final int categoryId;
+
+  ProductModel.fromJson(Map<String, dynamic> json){
+    id = json['id']??0;
+    nameEn = json['name_en']??"";
+    nameAr = json['name_ar']??"";
+    descriptionEn = json['description_en']??"";
+    descriptionAr = json['description_ar']??"";
+    price = json['price']??0;
+    stock = json['stock']??0;
+    imageUrl = json['image_url']??"";
+    categoryId = json['category_id']??0;
+  }
+
 }

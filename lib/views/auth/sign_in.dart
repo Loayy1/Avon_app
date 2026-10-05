@@ -1,8 +1,11 @@
-import 'package:cosmetics_app/core/helper_methods.dart';
+import 'package:cosmetics_app/core/logic/helper_methods.dart';
 import 'package:cosmetics_app/views/auth/log_in.dart';
 import 'package:cosmetics_app/views/auth/verify.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../core/logic/dio_helper.dart';
 
 class SignInView extends StatefulWidget {
   SignInView({super.key});
@@ -23,7 +26,24 @@ class _SignInViewState extends State<SignInView> {
   bool isOccurred = true;
   bool isOccurredInConfirm = true;
 
-  int phoneCode = 20;
+  String? phoneCode;
+
+  void register() async {
+    final resp = await DioHelper.sendData(
+      "/api/Auth/register",
+      data: {
+        "username": nameController.text,
+        "countryCode": "+20",
+        "phoneNumber": phoneController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
+      },
+    );
+    print("Data: ${resp.data}");
+    if (resp.isSuccess) {
+      goTo(page: VerifyView(fromSignIn: true,phone: phoneController.text,phonecode: phoneCode,));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +115,7 @@ class _SignInViewState extends State<SignInView> {
                         ),
                         child: DropdownButton(
                           value: phoneCode,
+                          hint: Text("code"),
                           padding: EdgeInsets.symmetric(horizontal: 19),
                           style: TextStyle(
                             fontSize: 14,
@@ -102,8 +123,8 @@ class _SignInViewState extends State<SignInView> {
                             color: Color(0xff434C6D),
                           ),
                           items: [
-                            DropdownMenuItem(value: 20, child: Text("+20")),
-                            DropdownMenuItem(value: 212, child: Text("+212")),
+                            DropdownMenuItem(value: "20", child: Text("+20")),
+                            DropdownMenuItem(value: "212", child: Text("+212")),
                           ],
                           onChanged: (value) {
                             phoneCode = value!;
@@ -199,7 +220,7 @@ class _SignInViewState extends State<SignInView> {
                             confirmPasswordController.text.isEmpty
                         ? null
                         : () {
-                            goTo(page: VerifyView(fromSignIn: true,));
+                            register();
                           },
                     style: TextButton.styleFrom(
                       disabledBackgroundColor: Colors.grey,

@@ -1,6 +1,8 @@
-import 'package:cosmetics_app/core/helper_methods.dart';
+import 'package:cosmetics_app/core/logic/dio_helper.dart';
+import 'package:cosmetics_app/core/logic/helper_methods.dart';
 import 'package:cosmetics_app/views/auth/sign_in.dart';
 import 'package:cosmetics_app/views/auth/verify.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,7 +21,22 @@ class _LogInViewState extends State<LogInView> {
   bool isObscure = true;
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
-  int phoneCode = 20;
+  String? phoneCode;
+
+  void logIn() async {
+    final resp = await DioHelper.sendData(
+      "/api/Auth/login",
+      data: {
+        "countryCode": "+20",
+        "phoneNumber": phoneController.text,
+        "password": passwordController.text,
+      },
+    );
+    print("loay${resp.data}");
+    if (resp.isSuccess) {
+      goTo(page: ViewPage());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +86,7 @@ class _LogInViewState extends State<LogInView> {
                         ),
                         child: DropdownButton(
                           value: phoneCode,
+                          hint: Text("code"),
                           padding: EdgeInsets.symmetric(horizontal: 19),
                           style: TextStyle(
                             fontSize: 14,
@@ -76,12 +94,20 @@ class _LogInViewState extends State<LogInView> {
                             color: Color(0xff434C6D),
                           ),
                           items: [
-                            DropdownMenuItem(value: 20, child: Text("+20")),
-                            DropdownMenuItem(value: 212, child: Text("+212")),
+                            DropdownMenuItem<String>(
+                              value: "20",
+                              child: Text("+20"),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: "212",
+                              child: Text("+212"),
+                            ),
                           ],
                           onChanged: (value) {
-                            phoneCode = value!;
-                            setState(() {});
+                            if (value != null) {
+                              phoneCode = value;
+                              setState(() {});
+                            }
                           },
                           borderRadius: BorderRadius.circular(8),
                           icon: Icon(
@@ -149,10 +175,8 @@ class _LogInViewState extends State<LogInView> {
                     alignment: AlignmentDirectional.centerEnd,
                     child: TextButton(
                       onPressed: () {
-                        goTo(page: ForgetPasswordView(),keepHistory: true);
-                        setState(() {
-
-                        });
+                        goTo(page: ForgetPasswordView(), keepHistory: true);
+                        setState(() {});
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Color(
@@ -176,7 +200,9 @@ class _LogInViewState extends State<LogInView> {
                             passwordController.text.isEmpty
                         ? null
                         : () {
-                            goTo(page: ViewPage());
+                            print("Phone: ${phoneController.text}");
+                            print("Password: ${passwordController.text}");
+                            logIn();
                           },
                     style: FilledButton.styleFrom(
                       backgroundColor: Color(0xffD75D72),
@@ -200,7 +226,7 @@ class _LogInViewState extends State<LogInView> {
                       ),
                       TextButton(
                         onPressed: () {
-                          goTo(page: SignInView(),keepHistory: true);
+                          goTo(page: SignInView(), keepHistory: true);
                           setState(() {});
                         },
                         style: TextButton.styleFrom(
@@ -228,3 +254,5 @@ class _LogInViewState extends State<LogInView> {
     );
   }
 }
+
+enum lodingstate { loading, failed, error }

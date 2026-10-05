@@ -1,3 +1,4 @@
+import 'package:cosmetics_app/core/logic/dio_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -9,22 +10,40 @@ class CategoriesView extends StatefulWidget {
 }
 
 class _CategoriesViewState extends State<CategoriesView> {
-  final list = [
-    _CategoriesModel(
-      title: "Bundles",
-      img: "assets/images/categories_img1.jpg",
-    ),
-    _CategoriesModel(
-      title: "Perfumes",
-      img: "assets/images/most_order_img1.jpg",
-    ),
-    _CategoriesModel(title: "Makeup", img: "assets/images/top_item2.jpg"),
-    _CategoriesModel(
-      title: "Skin Care",
-      img: "assets/images/most_order_img4.jpg",
-    ),
-    _CategoriesModel(title: "Gifts", img: "assets/images/gifts.jpg"),
-  ];
+  CategoriesData? details;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    final resp = await DioHelper.getData("/api/Categories");
+    if (resp.isSuccess) {
+      setState(() {
+        details = CategoriesData.fromJson({"data": resp.data});
+      });
+
+    }
+  }
+
+  // late final list = [
+  //   _CategoriesModel(
+  //     title: details!.list[0].titleEn,
+  //     img: details!.list[0].imageUrl,
+  //   ),
+  //   _CategoriesModel(
+  //     title: details!.list[1].titleEn,
+  //     img: "assets/images/most_order_img1.jpg",
+  //   ),
+  //   _CategoriesModel(title: "Makeup", img: "assets/images/top_item2.jpg"),
+  //   _CategoriesModel(
+  //     title: "Skin Care",
+  //     img: "assets/images/most_order_img4.jpg",
+  //   ),
+  //   _CategoriesModel(title: "Gifts", img: "assets/images/gifts.jpg"),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -73,29 +92,25 @@ class _CategoriesViewState extends State<CategoriesView> {
           ],
         ),
       ),
-      body: Column(
+      body: details ==null ? Center(child: CircularProgressIndicator()):Column(
         children: [
           Expanded(
             child: ListView.separated(
-              itemBuilder: (context, index) => _Items(model: list[index]),
-              separatorBuilder: (context, index) => SizedBox(height: 0,),
-              itemCount: list.length,
+              itemBuilder: (context, index) =>
+                  _Items(model: details!.list[index]),
+              separatorBuilder: (context, index) => Divider(color: Color(0x80B3B3C1)),
+              itemCount: details!.list.length,
             ),
-          ),SizedBox(height: 60,),
+          ),
+          SizedBox(height: 60),
         ],
       ),
     );
   }
 }
 
-class _CategoriesModel {
-  String title, img;
-
-  _CategoriesModel({required this.title, required this.img});
-}
-
 class _Items extends StatelessWidget {
-  final _CategoriesModel model;
+  final CategoryModel model;
 
   const _Items({super.key, required this.model});
 
@@ -111,15 +126,15 @@ class _Items extends StatelessWidget {
           ),
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
-              model.img,
+            child: Image.network(
+              model.imageUrl,
               height: 69,
               width: 60,
               fit: BoxFit.fill,
             ),
           ),
           title: Text(
-            model.title,
+            model.titleEn,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 14,
@@ -129,8 +144,32 @@ class _Items extends StatelessWidget {
           trailing: SvgPicture.asset("assets/icons/forward.svg"),
         ),
         SizedBox(height: 21),
-        Divider(color: Color(0x80B3B3C1)),
+
       ],
     );
+  }
+}
+
+class CategoriesData {
+  late final List<CategoryModel> list;
+
+  CategoriesData.fromJson(Map<String, dynamic> json) {
+    list = List.from(
+      json['data'] ?? [],
+    ).map((e) => CategoryModel.fromJson(e)).toList();
+  }
+}
+
+class CategoryModel {
+  late final int id;
+  late final String titleEn;
+  late final String titleAr;
+  late final String imageUrl;
+
+  CategoryModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    titleEn = json['title_en'] ?? "";
+    titleAr = json['title_ar'] ?? "";
+    imageUrl = json['image_url'] ?? "";
   }
 }
