@@ -22,7 +22,7 @@ class _LogInViewState extends State<LogInView> {
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
   String? phoneCode;
-
+  String? errorMsg;
   void logIn() async {
     final resp = await DioHelper.sendData(
       "/api/Auth/login",
@@ -35,6 +35,11 @@ class _LogInViewState extends State<LogInView> {
     print("loay${resp.data}");
     if (resp.isSuccess) {
       goTo(page: ViewPage());
+    }else{
+      setState(() {
+        errorMsg = "phone or password is wrong";
+      });
+
     }
   }
 
@@ -130,12 +135,13 @@ class _LogInViewState extends State<LogInView> {
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
+                            errorText: errorMsg,
                             labelText: "Phone Number",
                             labelStyle: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: Color(0xff8E8EA9),
-                            ),
+                            ),errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
                           ),
                         ),
                       ),
@@ -152,12 +158,13 @@ class _LogInViewState extends State<LogInView> {
                       fontWeight: FontWeight.w400,
                     ),
                     decoration: InputDecoration(
+                      errorText: errorMsg,
                       hintText: "Your Password",
                       hintStyle: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff8E8EA9),
-                      ),
+                      ),errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
                       suffixIcon: IconButton(
                         onPressed: () {
                           isObscure = !isObscure;

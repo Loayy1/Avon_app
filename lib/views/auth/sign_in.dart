@@ -25,7 +25,6 @@ class _SignInViewState extends State<SignInView> {
 
   bool isOccurred = true;
   bool isOccurredInConfirm = true;
-
   String? phoneCode;
 
   void register() async {
