@@ -20,10 +20,9 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     navigatorKey: navKey,
-    home: LogInView(),
+    home: ViewPage(),
     theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffD9D9D9),
-        // colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD75D72)),
         appBarTheme: AppBarThemeData(
             centerTitle: true, systemOverlayStyle: SystemUiOverlayStyle.dark
 
