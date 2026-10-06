@@ -1,12 +1,8 @@
 import 'package:cosmetics_app/core/logic/dio_helper.dart';
 import 'package:cosmetics_app/core/logic/helper_methods.dart';
 import 'package:cosmetics_app/views/auth/sign_in.dart';
-import 'package:cosmetics_app/views/auth/verify.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../pages/home.dart';
 import '../view.dart';
 import 'forget_password.dart';
 
