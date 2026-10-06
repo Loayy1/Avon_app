@@ -1,17 +1,39 @@
-# cosmetics_app
+# Avon App — Cosmetics Shopping App
 
-A new Flutter project.
+A cross-platform cosmetics shopping application built with **Flutter** and **Dart**, connected to a backend through REST APIs.
+
+## Features
+
+- Login and registration with API-based authentication
+- OTP verification
+- Product browsing and categories
+- Cart
+- User profile
+- Dynamic UI updates driven by API data
+
+## Tech Stack
+
+- **Flutter / Dart**
+- **Dio** for REST API communication
+- **Cubit** and **Provider** for state management
+- JSON parsing and reusable UI components
+
+## Screenshots
+
+<!-- Add 3-4 screenshots here, for example: -->
+<!-- <img src="screenshots/login.png" width="200"> <img src="screenshots/home.png" width="200"> -->
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+```bash
+git clone https://github.com/Loayy1/avon_app.git
+cd avon_app
+flutter pub get
+flutter run
+```
 
-A few resources to get you started if this is your first Flutter project:
+Requires Flutter SDK installed. See the [Flutter docs](https://docs.flutter.dev/get-started/install) to set it up.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Author
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Loay Mohamed Nader** — [LinkedIn](https://www.linkedin.com/in/loay-mohamed-621b7a33a) · [GitHub](https://github.com/Loayy1)
