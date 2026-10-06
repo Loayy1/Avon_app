@@ -261,5 +261,3 @@ class _LogInViewState extends State<LogInView> {
     );
   }
 }
-
-enum lodingstate { loading, failed, error }
