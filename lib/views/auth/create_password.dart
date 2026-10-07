@@ -21,11 +21,65 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
   
   void resetPassword()async{
     final resp=await DioHelper.sendData("/api/Auth/reset-password",data: {
-      "countryCode": "+20",
+      "countryCode": widget.phonecode,
       "phoneNumber": widget.phone,
       "newPassword": passwordController.text,
       "confirmPassword": confirmPasswordController.text
     });
+    if(resp.isSuccess){
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  "assets/images/done_verify.png",
+                ),
+                SizedBox(height: 26),
+                Text(
+                  "Password Created!",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff434C6D),
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "Congratulations! Your password \nhas been successfully created",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff8E8EA9),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 26),
+                TextButton(
+                  onPressed: () {
+                    goTo(page: LogInView());
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 18,
+                      horizontal: 54,
+                    ),
+                    backgroundColor: Color(0xffD75D72),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text("Return to login"),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
 
   }
 
@@ -118,58 +172,7 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
                                 confirmPasswordController.text
                         ? null
                         : () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/done_verify.png",
-                                      ),
-                                      SizedBox(height: 26),
-                                      Text(
-                                        "Password Created!",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff434C6D),
-                                        ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        "Congratulations! Your password \nhas been successfully created",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xff8E8EA9),
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 26),
-                                      TextButton(
-                                        onPressed: () {
-                                          goTo(page: LogInView());
-                                        },
-                                        style: TextButton.styleFrom(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 18,
-                                            horizontal: 54,
-                                          ),
-                                          backgroundColor: Color(0xffD75D72),
-                                          foregroundColor: Colors.white,
-                                        ),
-                                        child: Text("Return to login"),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
+                            resetPassword();
                           },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(

@@ -12,9 +12,9 @@ import 'forget_password.dart';
 class VerifyView extends StatefulWidget {
   final bool fromSignIn;
   final phone;
-  final phonecode;
+  final phoneCode;
 
-  const VerifyView({super.key, required this.fromSignIn, this.phone, this.phonecode});
+  const VerifyView({super.key, required this.fromSignIn, this.phone, this.phoneCode});
 
   @override
   State<VerifyView> createState() => _VerifyViewState();
@@ -32,7 +32,7 @@ class _VerifyViewState extends State<VerifyView> {
 
     final resp = await DioHelper.sendData(
       "/api/Auth/verify-otp",
-      data: {"countryCode": "+20", "phoneNumber": widget.phone, "otpCode": code},
+      data: {"countryCode": widget.phoneCode, "phoneNumber": widget.phone, "otpCode": code},
     );
     print("Data : ${resp.data}");
     if (resp.isSuccess) {
@@ -73,7 +73,7 @@ class _VerifyViewState extends State<VerifyView> {
                         if (widget.fromSignIn == true) {
                           goTo(page: ViewPage());
                         } else {
-                          goTo(page: CreatePasswordView(phone: widget.phone,));
+                          goTo(page: CreatePasswordView(phone: widget.phone,phonecode: widget.phoneCode,));
                         }
                       });
                     },
@@ -97,7 +97,7 @@ class _VerifyViewState extends State<VerifyView> {
           },
         );
       } else {
-        goTo(page: CreatePasswordView(phone: widget.phone,phonecode: widget.phonecode));
+        goTo(page: CreatePasswordView(phone: widget.phone,phonecode: widget.phoneCode));
       }
     }
   }

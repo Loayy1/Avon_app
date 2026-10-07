@@ -32,7 +32,7 @@ class _SignInViewState extends State<SignInView> {
       "/api/Auth/register",
       data: {
         "username": nameController.text,
-        "countryCode": "+20",
+        "countryCode": phoneCode,
         "phoneNumber": phoneController.text,
         "email": emailController.text,
         "password": passwordController.text,
@@ -40,7 +40,7 @@ class _SignInViewState extends State<SignInView> {
     );
     print("Data: ${resp.data}");
     if (resp.isSuccess) {
-      goTo(page: VerifyView(fromSignIn: true,phone: phoneController.text,phonecode: phoneCode,));
+      goTo(page: VerifyView(fromSignIn: true,phone: phoneController.text,phoneCode: phoneCode,));
     }
   }
 
@@ -122,8 +122,8 @@ class _SignInViewState extends State<SignInView> {
                             color: Color(0xff434C6D),
                           ),
                           items: [
-                            DropdownMenuItem(value: "20", child: Text("+20")),
-                            DropdownMenuItem(value: "212", child: Text("+212")),
+                            DropdownMenuItem(value: "+20", child: Text("+20")),
+                            DropdownMenuItem(value: "+212", child: Text("+212")),
                           ],
                           onChanged: (value) {
                             phoneCode = value!;

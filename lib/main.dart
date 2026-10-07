@@ -5,7 +5,7 @@ import 'package:cosmetics_app/views/auth/on_boarding.dart';
 import 'package:cosmetics_app/views/auth/sign_in.dart';
 import 'package:cosmetics_app/views/auth/splash.dart';
 import 'package:cosmetics_app/views/auth/verify.dart';
-import 'package:cosmetics_app/views/pages/cart/cart.dart';
+import 'package:cosmetics_app/views/pages/cart/view.dart';
 import 'package:cosmetics_app/views/pages/cart/checkout.dart';
 import 'package:cosmetics_app/views/pages/categories.dart';
 import 'package:cosmetics_app/views/pages/home.dart';
@@ -20,7 +20,7 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     navigatorKey: navKey,
-    home: ViewPage(),
+    home: VerifyView(fromSignIn: false,),
     theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffD9D9D9),
         appBarTheme: AppBarThemeData(

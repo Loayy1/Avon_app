@@ -15,12 +15,12 @@ class ForgetPasswordView extends StatefulWidget {
 }
 
 class _ForgetPasswordViewState extends State<ForgetPasswordView> {
-  int phoneCode = 20;
+  String? phoneCode;
   final phoneController = TextEditingController();
   
   void forgetPassword() async{
     final resp=await DioHelper.sendData("/api/Auth/forgot-password",data: {
-      "countryCode": "+20",
+      "countryCode": phoneCode,
       "phoneNumber": phoneController.text
     });
     print("Data: ${resp.data}");
@@ -28,7 +28,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
       page: VerifyView(
         fromSignIn: false,
         phone: phoneController.text,
-        phonecode: phoneCode,
+        phoneCode: phoneCode,
       ),
     );
   }
@@ -96,6 +96,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                           ),
                           child: DropdownButton(
                             value: phoneCode,
+                            hint:  Text("code"),
                             padding: EdgeInsets.symmetric(horizontal: 19),
                             style: TextStyle(
                               fontSize: 14,
@@ -103,8 +104,8 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                               color: Color(0xff434C6D),
                             ),
                             items: [
-                              DropdownMenuItem(value: 20, child: Text("+20")),
-                              DropdownMenuItem(value: 212, child: Text("+212")),
+                              DropdownMenuItem(value: "+20", child: Text("+20")),
+                              DropdownMenuItem(value: "+212", child: Text("+212")),
                             ],
                             onChanged: (value) {
                               phoneCode = value!;

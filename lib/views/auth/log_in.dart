@@ -23,7 +23,7 @@ class _LogInViewState extends State<LogInView> {
     final resp = await DioHelper.sendData(
       "/api/Auth/login",
       data: {
-        "countryCode": "+20",
+        "countryCode": phoneCode,
         "phoneNumber": phoneController.text,
         "password": passwordController.text,
       },
@@ -96,11 +96,11 @@ class _LogInViewState extends State<LogInView> {
                           ),
                           items: [
                             DropdownMenuItem<String>(
-                              value: "20",
+                              value: "+20",
                               child: Text("+20"),
                             ),
                             DropdownMenuItem<String>(
-                              value: "212",
+                              value: "+212",
                               child: Text("+212"),
                             ),
                           ],
