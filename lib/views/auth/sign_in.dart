@@ -1,5 +1,5 @@
 import 'package:cosmetics_app/core/logic/helper_methods.dart';
-import 'package:cosmetics_app/views/auth/log_in.dart';
+import 'package:cosmetics_app/views/auth/log_in/view.dart';
 import 'package:cosmetics_app/views/auth/verify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

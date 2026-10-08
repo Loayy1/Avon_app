@@ -5,7 +5,7 @@ import 'package:cosmetics_app/views/auth/verify.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'log_in.dart';
+import 'log_in/view.dart';
 
 class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});

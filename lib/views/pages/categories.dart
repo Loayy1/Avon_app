@@ -92,7 +92,7 @@ class _CategoriesViewState extends State<CategoriesView> {
           ],
         ),
       ),
-      body: details ==null ? Center(child: CircularProgressIndicator()):Column(
+      body: details ==null ? Center(child: CircularProgressIndicator(color: Color(0xffD75D72),)):Column(
         children: [
           Expanded(
             child: ListView.separated(
