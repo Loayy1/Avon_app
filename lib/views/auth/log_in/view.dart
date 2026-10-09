@@ -17,10 +17,12 @@ class LogInView extends StatefulWidget {
 class _LogInViewState extends State<LogInView> {
   @override
   Widget build(BuildContext context) {
+    print("loay build");
     return BlocProvider(
       create: (context) => LogInCubit(),
       child: Builder(
         builder: (ctx) {
+          print("loay BlocProvider");
           final cubit = BlocProvider.of<LogInCubit>(ctx);
           return Scaffold(
             body: SafeArea(
@@ -32,6 +34,7 @@ class _LogInViewState extends State<LogInView> {
                     buildWhen: (previous, current) =>
                         current is LogInFormUpdateState,
                     builder: (context, state) {
+                      print("loay Form");
                       return Form(
                         onChanged: cubit.formUpdate,
                         child: Column(
@@ -71,47 +74,56 @@ class _LogInViewState extends State<LogInView> {
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: DropdownButton(
-                                    value: cubit.phoneCode,
-                                    hint: Text("code"),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 19,
-                                    ),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff434C6D),
-                                    ),
-                                    items: [
-                                      DropdownMenuItem<String>(
-                                        value: "+20",
-                                        child: Text("+20"),
-                                      ),
-                                      DropdownMenuItem<String>(
-                                        value: "+212",
-                                        child: Text("+212"),
-                                      ),
-                                    ],
-                                    onChanged: (value) {
-                                      if (value != null) {
-                                        cubit.phoneCode = value;
-                                        setState(() {});
-                                      }
+                                  child: BlocBuilder(
+                                    bloc: cubit,
+                                    buildWhen: (previous, current) =>
+                                        current is LogInCodeUpdateState,
+                                    builder: (context, state) {
+                                      print("loay code");
+                                      return DropdownButton(
+                                        dropdownColor: Color(0xffD9D9D9),
+                                        value: cubit.phoneCode,
+                                        hint: Text("code"),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 19,
+                                        ),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff434C6D),
+                                        ),
+                                        items: [
+                                          DropdownMenuItem<String>(
+                                            value: "+20",
+                                            child: Text("+20"),
+                                          ),
+                                          DropdownMenuItem<String>(
+                                            value: "+212",
+                                            child: Text("+212"),
+                                          ),
+                                        ],
+                                        onChanged: (value) {
+                                          cubit.codeUpdate(value!);
+                                        },
+                                        borderRadius: BorderRadius.circular(8),
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: Color(0xff767676),
+                                          size: 17,
+                                        ),
+                                        underline: SizedBox(),
+                                      );
                                     },
-                                    borderRadius: BorderRadius.circular(8),
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xff767676),
-                                      size: 17,
-                                    ),
-                                    underline: SizedBox(),
                                   ),
                                 ),
                                 SizedBox(width: 6),
                                 Expanded(
                                   child: BlocBuilder(
                                     bloc: cubit,
+                                    buildWhen: (previous, current) =>
+                                        current is! LogInCodeUpdateState,
                                     builder: (context, state) {
+                                      print("loay TextFormField");
                                       return TextFormField(
                                         controller: cubit.phoneController,
                                         keyboardType: TextInputType.phone,
@@ -147,7 +159,10 @@ class _LogInViewState extends State<LogInView> {
                             SizedBox(height: 8),
                             BlocBuilder(
                               bloc: cubit,
+                              buildWhen: (previous, current) =>
+                                  current is! LogInCodeUpdateState,
                               builder: (context, state) {
+                                print("loay TextFormField2");
                                 return TextFormField(
                                   controller: cubit.passwordController,
                                   obscureText: cubit.isObscure,
@@ -192,7 +207,6 @@ class _LogInViewState extends State<LogInView> {
                                     page: ForgetPasswordView(),
                                     keepHistory: true,
                                   );
-                                  setState(() {});
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: Color(
@@ -272,7 +286,6 @@ class _LogInViewState extends State<LogInView> {
                                 TextButton(
                                   onPressed: () {
                                     goTo(page: SignInView(), keepHistory: true);
-                                    setState(() {});
                                   },
                                   style: TextButton.styleFrom(
                                     foregroundColor: Color(

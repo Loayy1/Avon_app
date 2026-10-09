@@ -24,6 +24,11 @@ class LogInCubit extends Cubit<LogInStates>{
     emit(LogInFormUpdateState());
   }
 
+  void codeUpdate(String code){
+      phoneCode = code;
+      emit(LogInCodeUpdateState());
+  }
+
 
   void logIn() async {
     emit(LogInLoadingState());
