@@ -40,7 +40,6 @@ class LogInCubit extends Cubit<LogInStates>{
         "password": passwordController.text,
       },
     );
-    print("loay${resp.data}");
     if (resp.isSuccess) {
       emit(LogInSuccessState());
       goTo(page: ViewPage());

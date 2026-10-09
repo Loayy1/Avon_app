@@ -25,7 +25,7 @@ class ProductModel {
     nameAr = json['name_ar'] ?? "";
     descriptionEn = json['description_en'] ?? "";
     descriptionAr = json['description_ar'] ?? "";
-    price = json['price'] ?? 0;
+    price = json['price'] ?? 0.0;
     stock = json['stock'] ?? 0;
     imageUrl = json['image_url'] ?? "";
     categoryId = json['category_id'] ?? 0;
